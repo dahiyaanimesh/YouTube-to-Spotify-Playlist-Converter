@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube to Spotify Playlist Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            color: #1DB954;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube to Spotify Playlist Converter</h1>
+        <p>Log in to your Spotify account and enter a YouTube playlist URL to convert it into a Spotify playlist!</p>
+
+        <!-- Spotify login -->
+        <a href="/login" class="button">Login with Spotify</a>
+
+        <hr>
+
+        <!-- Form for YouTube playlist URL input -->
+        <form action="/transfer" method="POST">
+            <fieldset>
+                <label for="playlist_url">YouTube Playlist URL:</label>
+                <input type="url" id="playlist_url" name="playlist_url" placeholder="Enter YouTube playlist URL" required>
+                <input type="submit" class="button-primary" value="Convert to Spotify">
+            </fieldset>
+        </form>
+
+        <footer>
+            <p>&copy; 2024 YouTube to Spotify Converter</p>
+        </footer>
+    </div>
+</body>
+</html>

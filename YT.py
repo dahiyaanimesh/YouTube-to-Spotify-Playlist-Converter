@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 import google.auth
 
 # YouTube OAuth setup
-CLIENT_SECRETS_FILE = "client_secret.json"
+CLIENT_SECRETS_FILE = "E:\Projects\Playlists-change\client_secret.json"
 SCOPES = ['https://www.googleapis.com/auth/youtube.readonly']
 
 # Spotify credentials
@@ -29,15 +29,27 @@ def extract_playlist_id(playlist_url):
     else:
         raise ValueError("Invalid YouTube playlist URL")
 
-# Step 3: Fetch videos from the YouTube playlist
+# Step 3: Fetch all videos from the YouTube playlist (with pagination for large playlists)
 def get_youtube_playlist_videos(youtube, playlist_id):
+    videos = []
     request = youtube.playlistItems().list(
         part="snippet",
         playlistId=playlist_id,
-        maxResults=50  # Adjust maxResults if needed
+        maxResults=50
     )
-    response = request.execute()
-    return response['items']
+    while request:
+        response = request.execute()
+        videos += response['items']
+        request = youtube.playlistItems().list_next(request, response)
+    return videos
+
+# Clean up video titles for better matching
+def clean_title(title):
+    # Remove common patterns like "(Official Video)", "(Official Music Video)", etc.
+    title = re.sub(r'\(.*Official.*\)', '', title)  # Remove official tags
+    title = re.sub(r'\[.*\]', '', title)  # Remove anything in brackets
+    title = re.sub(r'\s+', ' ', title).strip()  # Remove extra whitespace
+    return title
 
 # Step 4: Authenticate to Spotify API
 def authenticate_spotify():
@@ -55,10 +67,13 @@ def search_spotify_track(sp, track_name):
         return tracks[0]['id']  # Return the Spotify track ID
     return None
 
-# Step 6: Create a new Spotify playlist
+# Step 6: Create a new Spotify playlist and return its URL
 def create_spotify_playlist(sp, user_id, playlist_name):
     playlist = sp.user_playlist_create(user_id, playlist_name)
+    playlist_url = playlist['external_urls']['spotify']  # Get the URL of the playlist
+    print(f"Playlist created: {playlist_url}")
     return playlist['id']
+
 
 # Step 7: Add tracks to the Spotify playlist
 def add_tracks_to_spotify_playlist(sp, playlist_id, track_ids):
@@ -80,23 +95,33 @@ if __name__ == '__main__':
         exit()
 
     # Fetch YouTube playlist videos
+    print("Fetching YouTube playlist videos...")
     videos = get_youtube_playlist_videos(youtube, playlist_id)
 
     # Spotify Authentication
     sp = authenticate_spotify()
     spotify_user_id = sp.me()['id']  # Get the current Spotify user's ID
 
+    # Ask user for the Spotify playlist name
+    playlist_name = input("Enter a name for your new Spotify playlist: ")
+
     # Create a new Spotify playlist
-    spotify_playlist_id = create_spotify_playlist(sp, spotify_user_id, "YouTube Playlist Transfer")
+    spotify_playlist_id = create_spotify_playlist(sp, spotify_user_id, playlist_name)
 
     # Prepare list of track IDs for Spotify
     track_ids = []
+    failed_tracks = []  # To log tracks that were not found on Spotify
+
+    print("Searching for tracks on Spotify and adding them to your playlist...")
     for video in videos:
-        title = video['snippet']['title']
-        print(f"Searching for: {title}")
-        spotify_track_id = search_spotify_track(sp, title)
+        original_title = video['snippet']['title']
+        clean_video_title = clean_title(original_title)
+        print(f"Searching for: {clean_video_title}")
+        spotify_track_id = search_spotify_track(sp, clean_video_title)
         if spotify_track_id:
             track_ids.append(spotify_track_id)
+        else:
+            failed_tracks.append(original_title)  # Log the track that wasn't found
 
     # Add found tracks to the Spotify playlist
     if track_ids:
@@ -104,3 +129,9 @@ if __name__ == '__main__':
         print(f"Added {len(track_ids)} tracks to your Spotify playlist.")
     else:
         print("No tracks were found on Spotify.")
+
+    # Log tracks that weren't found on Spotify
+    if failed_tracks:
+        print("\nThe following tracks couldn't be found on Spotify:")
+        for failed_track in failed_tracks:
+            print(f"- {failed_track}")
