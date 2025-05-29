@@ -4,31 +4,32 @@
     --spotify-green: #1DB954;
     --spotify-dark: #191414;
     --youtube-red: #FF0000;
-    --primary-bg: #f8fafc;
-    --secondary-bg: #e2e8f0;
+    --primary-bg: #1a202c;
+    --secondary-bg: #2d3748;
     --accent-color: #667eea;
     --text-dark: #2d3748;
     --text-light: #4a5568;
     --gradient-spotify: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
     --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --soft-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-    --medium-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    --large-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --gradient-dark: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    --soft-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    --medium-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --large-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
     background-attachment: fixed;
     min-height: 100vh;
     color: #ffffff;
 }
 
-/* Navbar with clean design */
+/* Navbar with dark design */
 .navbar-dark {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(26, 32, 44, 0.9) !important;
     backdrop-filter: blur(20px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: var(--soft-shadow);
 }
 
@@ -36,12 +37,12 @@ body {
     font-weight: 800 !important;
     font-size: 1.5rem !important;
     color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .navbar-brand, .navbar-text, .navbar-nav .nav-link {
     color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Glass morphism effect for cards */
@@ -66,7 +67,7 @@ body {
 }
 
 .card-header {
-    background: var(--gradient-primary) !important;
+    background: var(--gradient-dark) !important;
     color: #ffffff !important;
     border-bottom: none !important;
     border-radius: 20px 20px 0 0 !important;
@@ -75,8 +76,9 @@ body {
 
 .card-header h4, .card-header h5, .card-header h6 {
     color: #ffffff !important;
-    text-shadow: none !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
     margin-bottom: 0;
+    font-weight: 600;
 }
 
 /* Feature icons */
@@ -149,13 +151,13 @@ body {
     box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-/* Form enhancements */
+/* Form enhancements for dark theme */
 .form-control {
     border-radius: 15px;
-    border: 2px solid #e2e8f0;
-    background: #ffffff !important;
+    border: 2px solid #4a5568;
+    background: #2d3748 !important;
     transition: all 0.3s ease;
-    color: var(--text-dark) !important;
+    color: #ffffff !important;
     padding: 0.75rem 1rem;
     font-size: 1rem;
 }
@@ -163,7 +165,8 @@ body {
 .form-control:focus {
     border-color: var(--spotify-green);
     box-shadow: 0 0 0 0.2rem rgba(29, 185, 84, 0.25);
-    background: #ffffff !important;
+    background: #2d3748 !important;
+    color: #ffffff !important;
 }
 
 .form-control::placeholder {
@@ -172,14 +175,14 @@ body {
 
 .input-group-text {
     border-radius: 15px 0 0 15px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid #4a5568;
     border-right: none;
-    background: #f7fafc !important;
-    color: var(--text-light) !important;
+    background: #1a202c !important;
+    color: #ffffff !important;
     padding: 0.75rem 1rem;
 }
 
-/* Form labels should be white on gradient background */
+/* Form labels should be white on dark background */
 .form-label {
     color: #ffffff !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
@@ -187,21 +190,21 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* Form text should be white */
+/* Form text should be light */
 .form-text {
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: #e2e8f0 !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
     font-size: 0.875rem;
 }
 
-/* Progress bar */
+/* Enhanced progress bar for dark theme */
 .progress {
-    background: #e2e8f0 !important;
+    background: #4a5568 !important;
     border: none !important;
     height: 12px !important;
     border-radius: 25px !important;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .progress-bar {
@@ -228,11 +231,11 @@ body {
     padding: 1.5rem;
     border-radius: 15px;
     background: #ffffff !important;
-    border: none !important;
     transition: all 0.3s ease;
     box-shadow: var(--medium-shadow) !important;
     position: relative;
     overflow: hidden;
+    border: none !important;
 }
 
 .stat-box::before {
@@ -639,4 +642,23 @@ h1, h2, h3, h4, h5, h6 {
 .card .btn {
     color: #ffffff !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dark cards for help section */
+.card.bg-dark {
+    background: var(--gradient-dark) !important;
+    border: 1px solid #4a5568 !important;
+}
+
+.card.bg-dark .card-body {
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+.card.bg-dark h6, .card.bg-dark li, .card.bg-dark p {
+    color: #ffffff !important;
+}
+
+.card.bg-dark .text-white {
+    color: #ffffff !important;
 } 

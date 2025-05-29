@@ -5,169 +5,170 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="bg-white p-4 rounded shadow-sm">
-            <!-- Success Header -->
-            <div class="text-center mb-5">
-                <div class="mb-4">
-                    <i class="fas fa-check-circle fa-5x text-success"></i>
-                </div>
-                <h1 class="display-5 fw-bold mb-3 text-white text-shadow">Conversion Complete!</h1>
-                <p class="lead text-white-50">Your YouTube playlist has been successfully converted to Spotify.</p>
+        <!-- Success Header -->
+        <div class="text-center mb-5">
+            <div class="mb-4">
+                <i class="fas fa-check-circle fa-5x text-success"></i>
             </div>
+            <h1 class="display-5 fw-bold mb-3 text-white">Conversion Complete!</h1>
+            <p class="lead text-white">Your YouTube playlist has been successfully converted to Spotify.</p>
+        </div>
 
-            <!-- Results Card -->
-            <div class="card shadow-lg mb-4">
-                <div class="card-header bg-success text-white text-center py-3">
-                    <h4 class="mb-0 text-white">
-                        <i class="fab fa-spotify me-2"></i>
-                        {{ results.playlist_name }}
-                    </h4>
+        <!-- Results Card -->
+        <div class="card shadow-lg mb-4">
+            <div class="card-header bg-success text-white text-center py-3">
+                <h4 class="mb-0 text-white">
+                    <i class="fab fa-spotify me-2"></i>
+                    {{ results.playlist_name }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <!-- Stats Row -->
+                <div class="row text-center mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-box">
+                            <h3 class="text-primary mb-1">{{ results.total_videos }}</h3>
+                            <small class="text-dark fw-semibold">TOTAL VIDEOS</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-box">
+                            <h3 class="text-success mb-1">{{ results.found_tracks }}</h3>
+                            <small class="text-dark fw-semibold">FOUND ON SPOTIFY</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-box">
+                            <h3 class="text-warning mb-1">{{ results.failed_tracks|length }}</h3>
+                            <small class="text-dark fw-semibold">NOT FOUND</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-box">
+                            <h3 class="text-success mb-1">{{ "%.1f"|format(results.success_rate) }}%</h3>
+                            <small class="text-dark fw-semibold">SUCCESS RATE</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body bg-white">
-                    <!-- Stats Row -->
-                    <div class="row text-center mb-4">
-                        <div class="col-md-3 mb-3">
-                            <div class="stat-box border">
-                                <h3 class="text-primary mb-1">{{ results.total_videos }}</h3>
-                                <small class="text-dark fw-semibold">Total Videos</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="stat-box border">
-                                <h3 class="text-success mb-1">{{ results.found_tracks }}</h3>
-                                <small class="text-dark fw-semibold">Found on Spotify</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="stat-box border">
-                                <h3 class="text-warning mb-1">{{ results.failed_tracks|length }}</h3>
-                                <small class="text-dark fw-semibold">Not Found</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="stat-box border">
-                                <h3 class="text-info mb-1">{{ "%.1f"|format(results.success_rate) }}%</h3>
-                                <small class="text-dark fw-semibold">Success Rate</small>
-                            </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-bold text-dark">Conversion Progress</span>
+                        <span class="text-secondary fw-medium">{{ results.found_tracks }}/{{ results.total_videos }} tracks</span>
+                    </div>
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar bg-success" 
+                             role="progressbar" 
+                             data-success-rate="{{ results.success_rate|round(1) }}"
+                             aria-valuenow="{{ results.success_rate|round(1) }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            <span class="text-white fw-bold">{{ "%.1f"|format(results.success_rate) }}%</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Progress Bar -->
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="fw-bold text-dark">Conversion Progress</span>
-                            <span class="text-secondary fw-medium">{{ results.found_tracks }}/{{ results.total_videos }} tracks</span>
-                        </div>
-                        <div class="progress" style="height: 20px;">
-                            <div class="progress-bar bg-success" 
-                                 role="progressbar" 
-                                 data-success-rate="{{ results.success_rate|round(1) }}"
-                                 aria-valuenow="{{ results.success_rate|round(1) }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
-                                <span class="text-white fw-bold">{{ "%.1f"|format(results.success_rate) }}%</span>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
+                    <a href="{{ results.playlist_url }}" target="_blank" class="btn btn-success btn-lg">
+                        <i class="fab fa-spotify me-2"></i>
+                        OPEN IN SPOTIFY
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i>
+                        CONVERT ANOTHER
+                    </a>
+                </div>
 
-                    <!-- Action Buttons -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
-                        <a href="{{ results.playlist_url }}" target="_blank" class="btn btn-success btn-lg">
-                            <i class="fab fa-spotify me-2"></i>
-                            Open in Spotify
-                        </a>
-                        <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-lg">
-                            <i class="fas fa-plus me-2"></i>
-                            Convert Another
-                        </a>
-                    </div>
-
-                    <!-- Success Message -->
-                    {% if results.success_rate >= 80 %}
-                        <div class="alert alert-success" role="alert">
-                            <i class="fas fa-thumbs-up me-2"></i>
+                <!-- Success Message -->
+                {% if results.success_rate >= 80 %}
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <i class="fas fa-thumbs-up me-3 fa-lg"></i>
+                        <div>
                             <strong>Excellent!</strong> We found most of your tracks on Spotify. Your playlist is ready to enjoy!
                         </div>
-                    {% elif results.success_rate >= 60 %}
-                        <div class="alert alert-warning" role="alert">
-                            <i class="fas fa-info-circle me-2"></i>
+                    </div>
+                {% elif results.success_rate >= 60 %}
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="fas fa-info-circle me-3 fa-lg"></i>
+                        <div>
                             <strong>Good match!</strong> We found a good portion of your tracks. Some tracks might not be available on Spotify.
                         </div>
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            <i class="fas fa-lightbulb me-2"></i>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="fas fa-lightbulb me-3 fa-lg"></i>
+                        <div>
                             <strong>Partial match.</strong> Some tracks weren't found. This might be due to different naming or availability on Spotify.
                         </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Failed Tracks -->
-            {% if results.failed_tracks %}
-            <div class="card bg-white border">
-                <div class="card-header bg-white">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link text-decoration-none p-0 text-dark fw-bold" type="button" 
-                                data-bs-toggle="collapse" data-bs-target="#failedTracks" 
-                                aria-expanded="false" aria-controls="failedTracks">
-                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                            Tracks Not Found on Spotify ({{ results.failed_tracks|length }})
-                            <i class="fas fa-chevron-down ms-2"></i>
-                        </button>
-                    </h5>
-                </div>
-                <div class="collapse" id="failedTracks">
-                    <div class="card-body bg-white">
-                        <p class="text-dark mb-3">
-                            These tracks couldn't be found on Spotify. They might be:
-                        </p>
-                        <ul class="text-dark mb-3">
-                            <li>Remixes, covers, or unofficial versions</li>
-                            <li>Region-restricted content</li>
-                            <li>Not available on Spotify</li>
-                            <li>Titled differently on Spotify</li>
-                        </ul>
-                        
-                        <div class="failed-tracks-list bg-light p-3 rounded" style="max-height: 300px; overflow-y: auto;">
-                            {% for track in results.failed_tracks %}
-                                <div class="border-bottom py-2">
-                                    <i class="fas fa-times text-danger me-2"></i>
-                                    <span class="text-dark">{{ track }}</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        
-                        <div class="mt-3">
-                            <small class="text-secondary">
-                                <i class="fas fa-lightbulb me-1"></i>
-                                Tip: You can manually search for these tracks on Spotify and add them to your playlist.
-                            </small>
-                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
-            {% endif %}
+        </div>
 
-            <!-- Tips Section -->
-            <div class="mt-5">
-                <div class="card bg-white border">
-                    <div class="card-body">
-                        <h6 class="card-title text-dark">
-                            <i class="fas fa-lightbulb text-warning me-2"></i>
-                            What's next?
-                        </h6>
-                        <ul class="mb-0 text-dark">
-                            <li class="mb-2">Your playlist is now available in your Spotify library</li>
-                            <li class="mb-2">You can edit, reorder, or add more tracks as needed</li>
-                            <li class="mb-2">Share your playlist with friends and family</li>
-                            <li class="mb-2">Consider following artists you discovered</li>
-                        </ul>
+        <!-- Failed Tracks -->
+        {% if results.failed_tracks %}
+        <div class="card shadow-lg mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <button class="btn btn-link text-decoration-none p-0 text-dark fw-bold w-100 text-start" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#failedTracks" 
+                            aria-expanded="false" aria-controls="failedTracks">
+                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                        Tracks Not Found on Spotify ({{ results.failed_tracks|length }})
+                        <i class="fas fa-chevron-down ms-2 float-end"></i>
+                    </button>
+                </h5>
+            </div>
+            <div class="collapse" id="failedTracks">
+                <div class="card-body">
+                    <p class="text-dark mb-3">
+                        These tracks couldn't be found on Spotify. They might be:
+                    </p>
+                    <ul class="text-dark mb-3">
+                        <li>Remixes, covers, or unofficial versions</li>
+                        <li>Region-restricted content</li>
+                        <li>Not available on Spotify</li>
+                        <li>Titled differently on Spotify</li>
+                    </ul>
+                    
+                    <div class="failed-tracks-list bg-light p-3 rounded border" style="max-height: 300px; overflow-y: auto;">
+                        {% for track in results.failed_tracks %}
+                            <div class="border-bottom py-2 last:border-0">
+                                <i class="fas fa-times text-danger me-2"></i>
+                                <span class="text-dark">{{ track }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-secondary">
+                            <i class="fas fa-lightbulb me-1"></i>
+                            Tip: You can manually search for these tracks on Spotify and add them to your playlist.
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
+
+        <!-- Tips Section -->
+        <div class="card shadow-lg bg-dark text-white">
+            <div class="card-body">
+                <h6 class="card-title text-white">
+                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                    What's next?
+                </h6>
+                <ul class="mb-0 text-white">
+                    <li class="mb-2">Your playlist is now available in your Spotify library</li>
+                    <li class="mb-2">You can edit, reorder, or add more tracks as needed</li>
+                    <li class="mb-2">Share your playlist with friends and family</li>
+                    <li class="mb-2">Consider following artists you discovered</li>
+                </ul>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 
 <!-- Hidden data for JavaScript -->
