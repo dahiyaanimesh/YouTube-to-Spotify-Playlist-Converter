@@ -50,7 +50,7 @@ Before you begin, ensure you have:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/youtube-to-spotify-converter.git
+   git clone <repository-url>
    cd youtube-to-spotify-converter
    ```
 
