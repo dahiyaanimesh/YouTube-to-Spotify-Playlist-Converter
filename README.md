@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![App Screenshot](https://via.placeholder.com/800x400/1a202c/ffffff?text=YouTube+to+Spotify+Converter)
-
 *A modern web application that seamlessly converts YouTube playlists to Spotify playlists*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
