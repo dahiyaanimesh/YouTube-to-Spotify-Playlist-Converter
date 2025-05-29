@@ -1,4 +1,5 @@
 import os
+import ssl
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -27,6 +28,22 @@ class Config:
     APP_NAME = os.getenv('APP_NAME', 'YouTube to Spotify Converter')
     DEFAULT_PLAYLIST_NAME = os.getenv('DEFAULT_PLAYLIST_NAME', 'Converted from YouTube')
     MAX_TRACKS_PER_REQUEST = 100  # Spotify API limit
+    
+    # SSL Configuration for network issues
+    SSL_VERIFY = os.getenv('SSL_VERIFY', 'true').lower() == 'true'
+    HTTP_TIMEOUT = int(os.getenv('HTTP_TIMEOUT', '30'))
+    
+    @staticmethod
+    def get_ssl_context():
+        """Get SSL context for handling SSL/TLS issues."""
+        if Config.SSL_VERIFY:
+            return ssl.create_default_context()
+        else:
+            # Create unverified context for development/troubleshooting
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+            return context
     
     @staticmethod
     def validate_config():

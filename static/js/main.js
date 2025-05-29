@@ -83,10 +83,17 @@ function initializeConversionForm() {
                 return;
             }
             
-            // Show loading state with dynamic messages
+            // Hide the form and show loading state with overlay positioning
             setTimeout(() => {
-                convertBtn.style.display = 'none';
+                convertForm.classList.add('d-none');
                 loadingState.classList.remove('d-none');
+                
+                // Ensure the loading state doesn't extend the card
+                const cardBody = convertForm.closest('.card-body');
+                if (cardBody) {
+                    cardBody.style.position = 'relative';
+                    cardBody.style.minHeight = '400px';
+                }
                 
                 // Start the dynamic loading animation
                 startDynamicLoading();
@@ -97,16 +104,16 @@ function initializeConversionForm() {
 
 function startDynamicLoading() {
     const loadingSteps = [
-        "🔗 Connecting to YouTube...",
-        "📋 Fetching playlist information...",
-        "🎵 Analyzing video tracks...",
-        "🔍 Searching on Spotify...",
-        "🎯 Matching songs...",
-        "✨ Finding perfect matches...",
-        "📝 Creating your playlist...",
-        "🎵 Adding tracks to Spotify...",
-        "🎉 Almost done...",
-        "🚀 Finalizing conversion..."
+        '<i class="fas fa-link text-primary"></i> Connecting to YouTube...',
+        '<i class="fas fa-list text-danger"></i> Fetching playlist information...',
+        '<i class="fas fa-music text-info"></i> Analyzing video tracks...',
+        '<i class="fas fa-search text-success"></i> Searching on Spotify...',
+        '<i class="fas fa-crosshairs text-warning"></i> Matching songs...',
+        '<i class="fas fa-star text-primary"></i> Finding perfect matches...',
+        '<i class="fas fa-plus-circle text-success"></i> Creating your playlist...',
+        '<i class="fas fa-plus text-success"></i> Adding tracks to Spotify...',
+        '<i class="fas fa-check text-info"></i> Almost done...',
+        '<i class="fas fa-rocket text-primary"></i> Finalizing conversion...'
     ];
     
     const loadingStepElement = document.getElementById('loadingStep');
@@ -117,21 +124,24 @@ function startDynamicLoading() {
     // Add some visual flair to the loading container
     const loadingState = document.getElementById('loadingState');
     if (loadingState) {
-        loadingState.style.background = 'rgba(255, 255, 255, 0.95)';
+        loadingState.style.background = 'rgba(255, 255, 255, 0.98)';
         loadingState.style.backdropFilter = 'blur(20px)';
         loadingState.style.borderRadius = '20px';
-        loadingState.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+        loadingState.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.08)';
         loadingState.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+        loadingState.style.padding = '2.5rem';
+        loadingState.style.maxWidth = '500px';
+        loadingState.style.margin = '0 auto';
     }
     
     // Update loading message with smooth transitions
     const updateStep = () => {
         if (currentStep < loadingSteps.length) {
             loadingStepElement.style.opacity = '0';
-            loadingStepElement.style.transform = 'translateY(10px)';
+            loadingStepElement.style.transform = 'translateY(15px)';
             
             setTimeout(() => {
-                loadingStepElement.textContent = loadingSteps[currentStep];
+                loadingStepElement.innerHTML = loadingSteps[currentStep];
                 loadingStepElement.style.opacity = '1';
                 loadingStepElement.style.transform = 'translateY(0)';
             }, 300);
@@ -139,30 +149,40 @@ function startDynamicLoading() {
             currentStep++;
             
             // Variable timing for more natural feeling
-            const delay = 1500 + Math.random() * 2000;
+            const delay = 1800 + Math.random() * 1500;
             setTimeout(updateStep, delay);
         } else {
             // Loop back to searching/matching steps for long operations
             currentStep = 3; // Start from "Searching on Spotify"
-            setTimeout(updateStep, 2000);
+            setTimeout(updateStep, 2500);
         }
     };
     
     // Add CSS transition for smooth text changes
     if (loadingStepElement) {
-        loadingStepElement.style.transition = 'all 0.3s ease-in-out';
+        loadingStepElement.style.transition = 'all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
         loadingStepElement.style.fontWeight = '600';
         loadingStepElement.style.fontSize = '1.1rem';
         loadingStepElement.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+        loadingStepElement.style.color = '#2d3748';
+        loadingStepElement.style.display = 'flex';
+        loadingStepElement.style.alignItems = 'center';
+        loadingStepElement.style.justifyContent = 'center';
+        loadingStepElement.style.gap = '8px';
+        loadingStepElement.style.minHeight = '32px';
     }
     
     // Start the animation
     setTimeout(updateStep, 1000);
     
-    // Add pulsing effect to the spinner
+    // Enhanced spinner styling
     const spinner = loadingState?.querySelector('.spinner-border');
     if (spinner) {
-        spinner.style.filter = 'drop-shadow(0 0 10px rgba(29, 185, 84, 0.3))';
+        spinner.style.width = '3.5rem';
+        spinner.style.height = '3.5rem';
+        spinner.style.borderWidth = '4px';
+        spinner.style.filter = 'drop-shadow(0 4px 8px rgba(29, 185, 84, 0.3))';
+        spinner.style.marginBottom = '1.5rem';
     }
     
     // Create floating particles effect
