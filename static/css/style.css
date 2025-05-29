@@ -1,0 +1,642 @@
+/* Custom styles for YouTube to Spotify Converter */
+
+:root {
+    --spotify-green: #1DB954;
+    --spotify-dark: #191414;
+    --youtube-red: #FF0000;
+    --primary-bg: #f8fafc;
+    --secondary-bg: #e2e8f0;
+    --accent-color: #667eea;
+    --text-dark: #2d3748;
+    --text-light: #4a5568;
+    --gradient-spotify: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --soft-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --medium-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --large-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+/* Navbar with clean design */
+.navbar-dark {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--soft-shadow);
+}
+
+.navbar-brand {
+    font-weight: 800 !important;
+    font-size: 1.5rem !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.navbar-brand, .navbar-text, .navbar-nav .nav-link {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Glass morphism effect for cards */
+.card {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: var(--large-shadow) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-body {
+    background: #ffffff !important;
+    color: var(--text-dark) !important;
+    border-radius: 0 0 20px 20px;
+    padding: 2rem;
+}
+
+.card-header {
+    background: var(--gradient-primary) !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 1.5rem 2rem;
+}
+
+.card-header h4, .card-header h5, .card-header h6 {
+    color: #ffffff !important;
+    text-shadow: none !important;
+    margin-bottom: 0;
+}
+
+/* Feature icons */
+.feature-icon {
+    transition: transform 0.3s ease;
+}
+
+.feature-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Custom buttons */
+.btn {
+    border-radius: 25px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-success {
+    background: var(--gradient-spotify) !important;
+    background-size: 200% 200% !important;
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
+}
+
+.btn-primary {
+    background: var(--gradient-primary) !important;
+    background-size: 200% 200% !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-outline-primary {
+    background: transparent !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    color: #ffffff !important;
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline-primary:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+/* Form enhancements */
+.form-control {
+    border-radius: 15px;
+    border: 2px solid #e2e8f0;
+    background: #ffffff !important;
+    transition: all 0.3s ease;
+    color: var(--text-dark) !important;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--spotify-green);
+    box-shadow: 0 0 0 0.2rem rgba(29, 185, 84, 0.25);
+    background: #ffffff !important;
+}
+
+.form-control::placeholder {
+    color: #a0aec0 !important;
+}
+
+.input-group-text {
+    border-radius: 15px 0 0 15px;
+    border: 2px solid #e2e8f0;
+    border-right: none;
+    background: #f7fafc !important;
+    color: var(--text-light) !important;
+    padding: 0.75rem 1rem;
+}
+
+/* Form labels should be white on gradient background */
+.form-label {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem;
+}
+
+/* Form text should be white */
+.form-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+    font-size: 0.875rem;
+}
+
+/* Progress bar */
+.progress {
+    background: #e2e8f0 !important;
+    border: none !important;
+    height: 12px !important;
+    border-radius: 25px !important;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.progress-bar {
+    background: var(--gradient-spotify) !important;
+    border-radius: 25px !important;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.6s ease;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s linear infinite;
+}
+
+/* Stats boxes with clean design */
+.stat-box {
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: #ffffff !important;
+    border: none !important;
+    transition: all 0.3s ease;
+    box-shadow: var(--medium-shadow) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.stat-box:hover::before {
+    left: 100%;
+}
+
+.stat-box:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--large-shadow) !important;
+}
+
+.stat-box h3 {
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    color: var(--text-dark) !important;
+    text-shadow: none !important;
+}
+
+.stat-box small {
+    color: var(--text-light) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+/* Alert enhancements */
+.alert {
+    border: none;
+    border-radius: 15px;
+    border-left: 4px solid;
+    background: #ffffff !important;
+    box-shadow: var(--medium-shadow);
+    color: var(--text-dark) !important;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    border-left-color: var(--spotify-green);
+}
+
+.alert-warning {
+    border-left-color: #f59e0b;
+}
+
+.alert-info {
+    border-left-color: #3b82f6;
+}
+
+.alert-danger {
+    border-left-color: #ef4444;
+}
+
+/* Footer styles */
+footer {
+    background: var(--gradient-primary) !important;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    80% {
+        transform: translateY(-5px);
+    }
+}
+
+.spinner-border {
+    animation: pulse 2s infinite;
+}
+
+/* Enhanced loading state with dynamic animations */
+#loadingState {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 20px !important;
+}
+
+/* Multi-ring loading spinner */
+#loadingState .spinner-border {
+    width: 4rem !important;
+    height: 4rem !important;
+    border-width: 4px !important;
+    border-color: transparent !important;
+    border-top-color: var(--spotify-green) !important;
+    border-right-color: #667eea !important;
+    border-bottom-color: #f093fb !important;
+    border-left-color: #f5576c !important;
+    animation: rainbowSpin 2s linear infinite, pulse 3s ease-in-out infinite !important;
+    position: relative;
+}
+
+/* Rainbow spinning animation */
+@keyframes rainbowSpin {
+    0% {
+        transform: rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    25% {
+        transform: rotate(90deg);
+        filter: hue-rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+        filter: hue-rotate(180deg);
+    }
+    75% {
+        transform: rotate(270deg);
+        filter: hue-rotate(270deg);
+    }
+    100% {
+        transform: rotate(360deg);
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Loading step text animations */
+#loadingStep {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #4a5568;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 28px;
+    display: inline-block;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientText 3s ease infinite;
+}
+
+@keyframes gradientText {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Floating particles effect */
+#loadingState::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: floatParticles 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes floatParticles {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50px, -50px) rotate(360deg);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .feature-icon i {
+        font-size: 2rem !important;
+    }
+    
+    .stat-box h3 {
+        font-size: 1.8rem;
+    }
+    
+    #loadingState .spinner-border {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #ffffff;
+    }
+    
+    .card {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #2d3748 !important;
+    }
+    
+    .card-body {
+        color: #2d3748 !important;
+    }
+    
+    .text-muted {
+        color: #b3b3b3 !important;
+    }
+}
+
+/* Custom scrollbar */
+.failed-tracks-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.failed-tracks-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.failed-tracks-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.failed-tracks-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Gradient backgrounds */
+.bg-gradient {
+    background: var(--gradient-primary) !important;
+}
+
+/* Animation for success icons */
+.fa-check-circle {
+    animation: bounce 1s ease-in-out;
+}
+
+/* Results page improvements */
+.results-card .card-body {
+    background-color: #ffffff !important;
+}
+
+.results-stats h3 {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.results-stats small {
+    color: #495057 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+}
+
+/* Failed tracks list styling */
+.failed-tracks-list {
+    background: rgba(248, 249, 250, 0.95) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 10px;
+}
+
+.failed-tracks-list .border-bottom {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Force dark text everywhere for readability */
+.card .text-dark,
+.card .text-secondary,
+.card ul li,
+.card .list-group-item {
+    color: #2d3748 !important;
+    font-weight: 500;
+}
+
+/* Tips section improvements */
+.card .list-group-item,
+.card ul li {
+    color: #2d3748 !important;
+    margin-bottom: 0.5rem;
+    background: transparent !important;
+}
+
+/* Text shadows for better readability */
+.text-white {
+    color: #ffffff !important;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 600 !important;
+}
+
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 500 !important;
+}
+
+/* Better button contrast */
+.btn-link {
+    color: #212529 !important;
+}
+
+.btn-link:hover {
+    color: #0056b3 !important;
+}
+
+/* Floating animation for particles */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Add some magic sparkles */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.3)"/><circle cx="80" cy="30" r="1" fill="rgba(255,255,255,0.2)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.4)"/><circle cx="90" cy="80" r="1" fill="rgba(255,255,255,0.3)"/></svg>') repeat;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Hero section text improvements */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7) !important;
+    font-weight: 700 !important;
+}
+
+/* Feature section text */
+.feature-icon + h5 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+    font-weight: 600 !important;
+}
+
+/* Feature description text */
+.text-muted {
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+    font-weight: 500 !important;
+}
+
+/* Lead text styling */
+.lead {
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7) !important;
+    font-weight: 500 !important;
+}
+
+/* Force dark text in cards only */
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
+.card p, .card span, .card div, .card li, .card small,
+.card .text-dark, .card .text-secondary,
+.card ul li, .card .list-group-item {
+    color: #2d3748 !important;
+    text-shadow: none !important;
+    font-weight: 500;
+}
+
+/* Button text in cards */
+.card .btn {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+} 
