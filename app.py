@@ -174,7 +174,8 @@ def create_app(config_name=None):
             
             # Search for tracks and collect results
             found_tracks = []
-            failed_tracks = []
+            successful_matches = []
+            failed_matches = []
             
             logger.info("Starting track search...")
             for i, video in enumerate(videos):
@@ -186,6 +187,12 @@ def create_app(config_name=None):
                 # Try to extract artist from title
                 clean_title, artist = extract_artist_from_title(video_title)
                 
+                # Create track data object
+                track_data = {
+                    'title': video_title,
+                    'artist': artist or channel_title
+                }
+                
                 # Search on Spotify
                 track_id = spotify_service.search_track(
                     clean_title, 
@@ -194,12 +201,14 @@ def create_app(config_name=None):
                 
                 if track_id:
                     found_tracks.append(track_id)
+                    successful_matches.append(track_data)
                     logger.debug(f"Found: {video_title}")
                 else:
-                    failed_tracks.append(video_title)
+                    track_data['reason'] = 'Not found on Spotify'
+                    failed_matches.append(track_data)
                     logger.debug(f"Not found: {video_title}")
             
-            logger.info(f"Track search complete: {len(found_tracks)} found, {len(failed_tracks)} failed")
+            logger.info(f"Track search complete: {len(found_tracks)} found, {len(failed_matches)} failed")
             
             # Add tracks to playlist
             if found_tracks:
@@ -211,17 +220,18 @@ def create_app(config_name=None):
                 
                 if success:
                     logger.info("Playlist creation successful!")
-                    # Prepare results
-                    results = {
-                        'playlist_name': playlist_name,
-                        'playlist_url': spotify_playlist['url'],
-                        'total_videos': len(videos),
-                        'found_tracks': len(found_tracks),
-                        'failed_tracks': failed_tracks,
-                        'success_rate': (len(found_tracks) / len(videos)) * 100
-                    }
                     
-                    return render_template('result.html', results=results)
+                    # Calculate success rate
+                    total_videos = len(videos)
+                    success_rate = (len(found_tracks) / total_videos) * 100 if total_videos > 0 else 0
+                    
+                    # Pass variables directly to template (not in a results dict)
+                    return render_template('result.html',
+                                         playlist_name=playlist_name,
+                                         spotify_playlist_url=spotify_playlist['url'],
+                                         successful_matches=successful_matches,
+                                         failed_matches=failed_matches,
+                                         success_rate=success_rate)
                 else:
                     logger.error("Failed to add tracks to playlist")
                     flash('Failed to add tracks to Spotify playlist.', 'error')

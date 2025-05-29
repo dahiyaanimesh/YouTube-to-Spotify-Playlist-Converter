@@ -2,235 +2,330 @@
 
 {% block title %}Conversion Results - YouTube to Spotify Converter{% endblock %}
 
+{% block head %}
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Your YouTube playlist has been successfully converted to Spotify. View conversion results and statistics.">
+{% endblock %}
+
 {% block content %}
-<!-- Success Header -->
-<div class="text-center mb-4">
-    <div class="mb-3">
-        <i class="fas fa-check-circle fa-4x text-success"></i>
-    </div>
-    <h1 class="display-6 fw-bold mb-2 hero-title">Conversion Complete!</h1>
-    <p class="lead hero-description">Your YouTube playlist has been successfully converted to Spotify.</p>
-</div>
-
-<!-- Main Content - Side by Side Layout -->
-<div class="row">
-    <!-- Left Column - Results Card -->
-    <div class="col-lg-8 mb-4">
-        <!-- Results Card -->
-        <div class="card result-card shadow-lg mb-4">
-            <div class="card-header gradient-header text-center py-4">
-                <div class="d-flex align-items-center justify-content-center mb-2">
-                    <div class="spotify-icon-wrapper me-3">
-                        <i class="fab fa-spotify fa-2x"></i>
-                    </div>
-                    <div>
-                        <h4 class="mb-0 playlist-title">{{ results.playlist_name }}</h4>
-                        <small class="opacity-75">Successfully created on Spotify</small>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body result-body p-4">
-                <!-- Enhanced Stats Row -->
-                <div class="row text-center mb-4">
-                    <div class="col-md-3 mb-3">
-                        <div class="stat-box-enhanced total-videos">
-                            <div class="stat-icon">
-                                <i class="fas fa-play-circle fa-2x text-primary"></i>
-                            </div>
-                            <h3 class="stat-number">{{ results.total_videos }}</h3>
-                            <small class="stat-label">TOTAL VIDEOS</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stat-box-enhanced found-tracks">
-                            <div class="stat-icon">
-                                <i class="fas fa-check-circle fa-2x text-success"></i>
-                            </div>
-                            <h3 class="stat-number">{{ results.found_tracks }}</h3>
-                            <small class="stat-label">FOUND ON SPOTIFY</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stat-box-enhanced failed-tracks">
-                            <div class="stat-icon">
-                                <i class="fas fa-times-circle fa-2x text-warning"></i>
-                            </div>
-                            <h3 class="stat-number">{{ results.failed_tracks|length }}</h3>
-                            <small class="stat-label">NOT FOUND</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <div class="stat-box-enhanced success-rate">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-line fa-2x text-success"></i>
-                            </div>
-                            <h3 class="stat-number">{{ "%.1f"|format(results.success_rate) }}%</h3>
-                            <small class="stat-label">SUCCESS RATE</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enhanced Progress Bar -->
-                <div class="progress-section mb-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <span class="progress-title">Conversion Progress</span>
-                        <span class="progress-subtitle">{{ results.found_tracks }}/{{ results.total_videos }} tracks converted</span>
-                    </div>
-                    <div class="progress-wrapper">
-                        <div class="progress enhanced-progress">
-                            <div class="progress-bar gradient-progress" 
-                                 role="progressbar" 
-                                 data-success-rate="{{ results.success_rate|round(1) }}"
-                                 aria-valuenow="{{ results.success_rate|round(1) }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
-                                <span class="progress-text">{{ "%.1f"|format(results.success_rate) }}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enhanced Action Buttons -->
-                <div class="action-buttons-section mb-4">
-                    <div class="d-grid gap-3 d-md-flex justify-content-md-center">
-                        <a href="{{ results.playlist_url }}" target="_blank" class="btn btn-spotify btn-lg px-4">
-                            <i class="fab fa-spotify me-2"></i>
-                            Open in Spotify
-                            <i class="fas fa-external-link-alt ms-2 small"></i>
-                        </a>
-                        <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-lg px-4">
-                            <i class="fas fa-plus me-2"></i>
-                            Convert Another
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Enhanced Success Message -->
-                {% if results.success_rate >= 80 %}
-                    <div class="alert alert-success-enhanced d-flex align-items-center" role="alert">
-                        <div class="alert-icon me-3">
-                            <i class="fas fa-thumbs-up fa-lg"></i>
-                        </div>
-                        <div>
-                            <strong>Excellent conversion!</strong> We found most of your tracks on Spotify. Your playlist is ready to enjoy!
-                        </div>
-                    </div>
-                {% elif results.success_rate >= 60 %}
-                    <div class="alert alert-warning-enhanced d-flex align-items-center" role="alert">
-                        <div class="alert-icon me-3">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                        </div>
-                        <div>
-                            <strong>Good conversion!</strong> We found a good portion of your tracks. Some tracks might not be available on Spotify.
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="alert alert-info-enhanced d-flex align-items-center" role="alert">
-                        <div class="alert-icon me-3">
-                            <i class="fas fa-lightbulb fa-lg"></i>
-                        </div>
-                        <div>
-                            <strong>Partial conversion.</strong> Some tracks weren't found. This might be due to different naming or availability on Spotify.
-                        </div>
-                    </div>
-                {% endif %}
+<main class="container-fluid px-0">
+    <!-- Results Header with Animation -->
+    <header class="text-center mb-4 fade-in" role="banner">
+        <div class="success-icon-container mb-3">
+            <div class="success-icon">
+                <i class="fas fa-check-circle text-success" aria-hidden="true"></i>
             </div>
         </div>
-    </div>
+        <h1 class="display-6 fw-bold text-success mb-2">Conversion Complete!</h1>
+        <p class="lead text-white-50">Your YouTube playlist has been successfully converted to Spotify</p>
+    </header>
 
-    <!-- Right Column - Helper Cards -->
-    <div class="col-lg-4">
-        <!-- Failed Tracks -->
-        {% if results.failed_tracks %}
-        <div class="card shadow-lg mb-4 bg-dark">
-            <div class="card-header bg-dark">
-                <h6 class="mb-0 text-white">
-                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-                    Tracks Not Found ({{ results.failed_tracks|length }})
-                    <button class="btn btn-link text-white float-end p-0" type="button" 
-                            data-bs-toggle="collapse" data-bs-target="#failedTracks" 
-                            aria-expanded="false" aria-controls="failedTracks">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                </h6>
-            </div>
-            <div class="collapse" id="failedTracks">
-                <div class="card-body bg-dark text-white">
-                    <p class="mb-3 small">
-                        These tracks couldn't be found on Spotify:
-                    </p>
-                    
-                    <div class="failed-tracks-list p-3 rounded border" style="max-height: 200px;">
-                        {% for track in results.failed_tracks %}
-                            <div class="border-bottom py-2 last:border-0">
-                                <i class="fas fa-times text-danger me-2"></i>
-                                <span class="small">{{ track }}</span>
+    <!-- Main Results Content -->
+    <div class="row justify-content-center">
+        <!-- Results Card -->
+        <div class="col-lg-8 col-xl-6">
+            <div class="card bg-dark text-white shadow-lg mb-4 slide-up">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <div class="playlist-icon me-3">
+                                <i class="fab fa-spotify fa-3x text-success" aria-hidden="true"></i>
                             </div>
-                        {% endfor %}
-                    </div>
-                    
-                    <div class="mt-3">
-                        <small class="text-muted">
-                            <i class="fas fa-lightbulb me-1"></i>
-                            Manually search for these on Spotify
+                            <div>
+                                <h2 class="h3 mb-1 playlist-title">
+                                    {{ playlist_name or 'Your Converted Playlist' }}
+                                </h2>
+                                <p class="text-white-50 mb-0">
+                                    <i class="fas fa-music me-1" aria-hidden="true"></i>
+                                    {{ successful_matches|length + failed_matches|length }} tracks processed
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Conversion Statistics -->
+                        <div class="row text-center mb-4" role="region" aria-label="Conversion Statistics">
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <h3 class="h2 text-success mb-0" data-counter="{{ successful_matches|length }}">{{ successful_matches|length }}</h3>
+                                    <small class="text-white-50 fw-semibold">Successfully Added</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <h3 class="h2 text-warning mb-0" data-counter="{{ failed_matches|length }}">{{ failed_matches|length }}</h3>
+                                    <small class="text-white-50 fw-semibold">Not Found</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-item">
+                                    <h3 class="h2 text-info mb-0" data-counter="{{ success_rate }}">{{ "%.1f"|format(success_rate) }}%</h3>
+                                    <small class="text-white-50 fw-semibold">Success Rate</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="progress mb-4" style="height: 24px;" role="progressbar" aria-label="Conversion success rate" aria-valuenow="{{ success_rate }}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success progress-bar-animated" 
+                                 data-success-rate="{{ success_rate }}"
+                                 style="width: 0%"
+                                 aria-hidden="true">
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-2">
+                            <a href="{{ spotify_playlist_url }}" 
+                               class="btn btn-success btn-lg pulse-on-hover"
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               data-copy="{{ spotify_playlist_url }}"
+                               aria-describedby="spotify-btn-desc">
+                                <i class="fab fa-spotify me-2" aria-hidden="true"></i>
+                                Open Playlist in Spotify
+                            </a>
+                            
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button type="button" 
+                                            class="btn btn-outline-light w-100"
+                                            onclick="ClipboardManager.copy('{{ spotify_playlist_url }}')"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="Copy playlist URL">
+                                        <i class="fas fa-copy me-1" aria-hidden="true"></i>
+                                        Copy Link
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" 
+                                            class="btn btn-outline-info w-100"
+                                            onclick="sharePlaylist()"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="Share this playlist">
+                                        <i class="fas fa-share-alt me-1" aria-hidden="true"></i>
+                                        Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <small id="spotify-btn-desc" class="text-white-50 mt-3 d-block">
+                            <i class="fas fa-external-link-alt me-1" aria-hidden="true"></i>
+                            Opens in new tab
                         </small>
                     </div>
                 </div>
             </div>
         </div>
-        {% endif %}
+    </div>
 
-        <!-- Tips Section -->
-        <div class="card shadow-lg bg-dark text-white">
-            <div class="card-body bg-dark">
-                <h6 class="card-title text-white">
-                    <i class="fas fa-lightbulb text-warning me-2"></i>
-                    What's next?
-                </h6>
-                <ul class="mb-0 text-white small">
-                    <li class="mb-2">Your playlist is now in your Spotify library</li>
-                    <li class="mb-2">Edit, reorder, or add more tracks</li>
-                    <li class="mb-2">Share with friends and family</li>
-                    <li class="mb-2">Follow artists you discovered</li>
-                </ul>
+    <!-- Additional Info -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            {% if failed_matches|length > 0 %}
+            <!-- Missing Songs Info -->
+            <div class="card bg-dark text-white shadow mb-4 slide-up" style="animation-delay: 0.2s">
+                <div class="card-body text-center">
+                    <h3 class="card-title h5">
+                        <i class="fas fa-info-circle text-warning me-2" aria-hidden="true"></i>
+                        {{ failed_matches|length }} Song{{ 's' if failed_matches|length != 1 else '' }} Not Found
+                    </h3>
+                    <p class="text-white-50 mb-3">
+                        Some tracks couldn't be found on Spotify. They might be region-locked, 
+                        covers, or have different titles.
+                    </p>
+                    <div class="text-muted small">
+                        <strong>Search tips:</strong> Try searching manually by artist name, 
+                        removing "(Official Video)" from titles, or looking for alternate versions.
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Next Steps -->
+            <div class="card bg-dark text-white shadow mb-4 slide-up" style="animation-delay: 0.3s">
+                <div class="card-body text-center">
+                    <h3 class="card-title h5">
+                        <i class="fas fa-rocket text-primary me-2" aria-hidden="true"></i>
+                        What's Next?
+                    </h3>
+                    <div class="row text-center">
+                        <div class="col-6 mb-2">
+                            <i class="fas fa-headphones text-success fa-2x mb-2" aria-hidden="true"></i>
+                            <br><small>Enjoy your music</small>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <i class="fas fa-heart text-danger fa-2x mb-2" aria-hidden="true"></i>
+                            <br><small>Like songs you discover</small>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-users text-info fa-2x mb-2" aria-hidden="true"></i>
+                            <br><small>Share with friends</small>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-plus text-warning fa-2x mb-2" aria-hidden="true"></i>
+                            <br><small><a href="{{ url_for('index') }}" class="text-warning">Convert another</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Data for JavaScript -->
+    <div id="resultData" 
+         class="d-none"
+         data-success-rate="{{ success_rate }}"
+         data-total-tracks="{{ successful_matches|length + failed_matches|length }}"
+         data-successful-tracks="{{ successful_matches|length }}"
+         data-failed-tracks="{{ failed_matches|length }}"
+         data-playlist-url="{{ spotify_playlist_url }}"
+         data-playlist-name="{{ playlist_name or 'Converted Playlist' }}">
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="text-center mt-5 mb-4">
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2" aria-hidden="true"></i>
+            Convert Another Playlist
+        </a>
+    </div>
+</main>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h4 class="modal-title" id="shareModalLabel">
+                    <i class="fas fa-share-alt me-2" aria-hidden="true"></i>
+                    Share Your Playlist
+                </h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="shareUrl" class="form-label">Spotify Playlist URL</label>
+                    <div class="input-group">
+                        <input type="text" 
+                               class="form-control" 
+                               id="shareUrl" 
+                               value="{{ spotify_playlist_url }}" 
+                               readonly>
+                        <button class="btn btn-outline-light" 
+                                type="button" 
+                                onclick="ClipboardManager.copy(document.getElementById('shareUrl').value)">
+                            <i class="fas fa-copy" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row text-center">
+                    <div class="col-4">
+                        <button class="btn btn-outline-light w-100" onclick="shareToTwitter()">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                            <br><small>Twitter</small>
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-light w-100" onclick="shareToFacebook()">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                            <br><small>Facebook</small>
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-light w-100" onclick="shareNative()">
+                            <i class="fas fa-share" aria-hidden="true"></i>
+                            <br><small>Share</small>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Hidden data for JavaScript -->
-<div id="resultData" data-success-rate="{{ results.success_rate|round(1) }}" style="display: none;"></div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Auto-collapse failed tracks if success rate is high
+// Results page functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize animations
+    initializeAnimations();
+    
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Clear form recovery data on successful conversion
+    try {
+        localStorage.removeItem('lastConversion');
+    } catch (e) {
+        console.warn('Failed to clear recovery data:', e);
+    }
+    
+    // Log conversion completion
     const resultData = document.getElementById('resultData');
     if (resultData) {
         const successRate = parseFloat(resultData.dataset.successRate);
-        if (successRate >= 90) {
-            // Keep collapsed for high success rates
-            const failedTracksCollapse = document.getElementById('failedTracks');
-            if (failedTracksCollapse) {
-                failedTracksCollapse.classList.remove('show');
-            }
-        }
-    }
-    
-    // Set progress bar width dynamically
-    const progressBar = document.querySelector('.progress-bar[data-success-rate]');
-    if (progressBar) {
-        const successRate = progressBar.dataset.successRate;
-        progressBar.style.width = successRate + '%';
-        
-        // Animate the progress bar
-        progressBar.style.width = '0%';
-        setTimeout(() => {
-            progressBar.style.transition = 'width 1.5s ease-in-out';
-            progressBar.style.width = successRate + '%';
-        }, 500);
+        console.log(`Conversion completed with ${successRate}% success rate`);
     }
 });
+
+function initializeAnimations() {
+    // Animate success icon
+    setTimeout(() => {
+        const successIcon = document.querySelector('.success-icon');
+        if (successIcon) {
+            successIcon.classList.add('animate-success');
+        }
+    }, 500);
+    
+    // Stagger card animations
+    const cards = document.querySelectorAll('.slide-up');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-slide-up');
+    });
+}
+
+function sharePlaylist() {
+    const shareModal = new bootstrap.Modal(document.getElementById('shareModal'));
+    shareModal.show();
+}
+
+function shareToTwitter() {
+    const resultData = document.getElementById('resultData');
+    const playlistName = resultData.dataset.playlistName;
+    const successRate = resultData.dataset.successRate;
+    const text = `Just converted my YouTube playlist "${playlistName}" to Spotify with ${successRate}% success rate! 🎵`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.origin)}`;
+    window.open(url, '_blank', 'width=600,height=400');
+}
+
+function shareToFacebook() {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin)}`;
+    window.open(url, '_blank', 'width=600,height=400');
+}
+
+function shareNative() {
+    if (navigator.share) {
+        const resultData = document.getElementById('resultData');
+        navigator.share({
+            title: 'YouTube to Spotify Converter',
+            text: `Check out my converted playlist: ${resultData.dataset.playlistName}`,
+            url: resultData.dataset.playlistUrl
+        }).catch(console.error);
+    } else {
+        ClipboardManager.copy(document.getElementById('shareUrl').value);
+        NotificationSystem.info('Link copied to clipboard!');
+    }
+}
+
+console.log('🎵 Results page loaded - Conversion complete!');
 </script>
 {% endblock %} 
