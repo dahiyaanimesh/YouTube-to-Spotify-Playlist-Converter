@@ -13,10 +13,10 @@
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](https://via.placeholder.com/800x500/1a202c/ffffff?text=Home+Page+-+Convert+Your+Playlists)
+![Home Page](https://github.com/dahiyaanimesh/YouTube-to-Spotify-Playlist-Converter/blob/main/static/Home.jpg)
 
 ### Conversion Results
-![Results Page](https://via.placeholder.com/800x500/ffffff/1a202c?text=Conversion+Results+-+Success+Statistics)
+![Results Page](https://github.com/dahiyaanimesh/YouTube-to-Spotify-Playlist-Converter/blob/main/static/results.jpg)
 
 
 ## ✨ Features
